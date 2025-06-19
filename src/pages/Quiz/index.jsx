@@ -18,7 +18,6 @@ const Container = Styled.div`
     margin: 50px 0 50px 50px;
     justify-content: space-around;
     font-family: 'Trebuchet MS', sans-serif;
-    
 `
 
 const BlockTop = Styled.div`

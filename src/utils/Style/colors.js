@@ -4,6 +4,7 @@ const colors = {
     violetMain: '#5843E4',
     coolGray: '#8186A0',
     backgroundLight: '#F9F9FC',
+    textSecondary: '#8186A0'
 }
 
 export default colors;

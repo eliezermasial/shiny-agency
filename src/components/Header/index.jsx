@@ -70,8 +70,8 @@ function Header() {
 
       <NavLinks>
         <StyledLink to="/" $colorLinks> Accueil </StyledLink>
-        <StyledLink to="/survey" $colorLinks> Questionnaires </StyledLink>
-        <StyledFreelanceLink to="/freelances" $bgBotton> Freelances </StyledFreelanceLink>
+        <StyledLink to="/freelances" $colorLinks> Profils </StyledLink>
+        <StyledFreelanceLink to="/quiz" $bgBotton> faire le test </StyledFreelanceLink>
       </NavLinks>
     </StyleNav>
   )
