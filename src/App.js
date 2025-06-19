@@ -6,7 +6,8 @@ import Survey from './pages/Survey';
 import Results from './pages/Results';
 import Error from './components/Error';
 import Header from './components/Header';
-import Freelances from './pages/Freelances';
+//import Freelances from './pages/Freelances';
+import Quiz from './pages/Quiz/';
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
         <Route path="/logo" />
         <Route path="/" element={<> <Header /> <Home /> </>} />
         <Route path="/results" element={<> <Header /> <Results /> </>} />
-        <Route path="/freelances" element={<> <Header /> <Freelances /> </>} />
+        <Route path="/freelances" element={<> <Header /> <Quiz /> </>} />
         <Route path="/survey" element={<> <Header />  <Survey /> </>} />
       </Routes>
   );

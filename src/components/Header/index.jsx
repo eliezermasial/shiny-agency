@@ -7,7 +7,8 @@ const StyleNav = Styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 25px 50px;
+  padding: 25px 0;
+  margin: 0 50px;
   border-bottom: 1px solid #e2e3e9;
   background-color: transparent;
 `

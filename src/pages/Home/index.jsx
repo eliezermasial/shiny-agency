@@ -8,6 +8,8 @@ const Container = Styled.div`
   justify-content: space-around;
   align-items: center;
   padding: 50px;
+  padding-bottom: 100px;
+  margin: 50px;
   background-color: ${colors.backgroundLight};
   min-height: 80vh;
   box-sizing: border-box;
