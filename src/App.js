@@ -12,7 +12,7 @@ import Quiz from './pages/Quiz/';
 function App() {
   return (
       <Routes>
-        <Route path="*" element={<Error />} />
+        <Route path="*" element={<> <Header /> <Error /> </>} />
         <Route path="/logo" />
         <Route path="/" element={<> <Header /> <Home /> </>} />
         <Route path="/results" element={<> <Header /> <Results /> </>} />
