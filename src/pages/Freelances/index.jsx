@@ -2,24 +2,29 @@ import Styled from 'styled-components';
 import colors from '../../utils/Style/colors';
 import Card from '../../components/Card/';
 import DefaultPicture from '../../assets/profil.jpg';
+import { Link } from 'react-router-dom';
  
 const freelanceProfiles = [
     {
+        id: 'jane-doe',
         name: 'Jane Doe',
         jobTitle: 'Devops',
         picture: DefaultPicture,
     },
     {
+        id: 'john-doe',
         name: 'John Doe',
         jobTitle: 'Developpeur frontend',
         picture: DefaultPicture,
     },
     {
+        id: 'jeanne-biche',
         name: 'Jeanne Biche',
         jobTitle: 'Développeuse Fullstack',
         picture: DefaultPicture,
     },
     {
+        id: 'eliezer-biche',
         name: 'Eliezer Biche',
         jobTitle: 'Développeuse Fullstack',
         picture: DefaultPicture,
@@ -83,11 +88,13 @@ function Freelances() {
 
             <BlockCard>
                 {freelanceProfiles.map((profil, index) => (
-                    <Card key={`${profil.name} - ${index}`}
-                        label={profil.name}
-                        title={profil.jobTitle}
-                        picture={profil.picture}
-                    />
+                    <Link to={`/profil/${profil.id}`} key={`${profil.name} - ${index}`} style={{ textDecoration: 'none' }}>
+                        <Card 
+                            label={profil.name}
+                            title={profil.jobTitle}
+                            picture={profil.picture}
+                        />
+                    </Link>
                 ))}
             </BlockCard>
 

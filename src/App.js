@@ -8,6 +8,8 @@ import Error from './components/Error';
 import Header from './components/Header';
 import Freelances from './pages/Freelances';
 import Quiz from './pages/Quiz/';
+import Profil from './components/Profil';
+
 
 function App() {
   return (
@@ -18,6 +20,7 @@ function App() {
         <Route path="/results" element={<> <Header /> <Results /> </>} />
         <Route path="/quiz" element={<> <Header /> <Quiz /> </>} />
         <Route path="/freelances" element={<> <Header />  <Freelances /> </>} />
+        <Route path='/profil/:id' element={<> <Header /> <Profil /> </>} />
       </Routes>
   );
 }
