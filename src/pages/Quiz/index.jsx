@@ -2,6 +2,7 @@ import Styled, {keyframes} from 'styled-components';
 import colors from '../../utils/Style/colors';
 import { Link, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import Attend from '../../utils/Attend';
 
 
 const Container = Styled.div`
@@ -112,7 +113,7 @@ const Spinner = Styled.div`
     width: 50px;
     height: 50px;
     border: 6px solid #ccc;
-    border-top: 6px solid #6c63ff;
+    border-top: 6px solid ${colors.violetMain};
     border-radius: 50%;
     animation: ${spin} 1s linear infinite;
     margin: auto;
@@ -129,17 +130,13 @@ function Quiz() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    async function attendre (ms) {
-        return new Promise(resolve => setTimeout(resolve,ms));
-    }
-
     useEffect (() => {
 
         async function fetchSurvey () {
             try {
 
                 setLoading(true);
-                await attendre(2000);
+                await Attend(2000);
 
                 const respons = await fetch('http://localhost:8000/survey');
                 const data = await respons.json();

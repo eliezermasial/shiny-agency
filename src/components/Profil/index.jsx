@@ -19,6 +19,7 @@ const Container = Styled.div`
 const PictureWrapper = Styled.div`
     flex-shrink: 0;
     padding: 10px;
+    
     img {
         border-radius: 50%;
         object-fit: cover;
