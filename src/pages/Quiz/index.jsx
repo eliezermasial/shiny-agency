@@ -1,6 +1,7 @@
-import Styled from 'styled-components';
+import Styled, {keyframes} from 'styled-components';
 import colors from '../../utils/Style/colors';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 
 const Container = Styled.div`
@@ -98,30 +99,95 @@ const StyleLink = Styled(Link)`
     }
 `
 
+const spin = keyframes`
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+`
+
+const Spinner = Styled.div`
+    width: 50px;
+    height: 50px;
+    border: 6px solid #ccc;
+    border-top: 6px solid #6c63ff;
+    border-radius: 50%;
+    animation: ${spin} 1s linear infinite;
+    margin: auto;
+`
+
+
 function Quiz() {
+
+    const {questNombre} = useParams();
+    const questNombreInt = parseInt(questNombre);
+    const precQuest = questNombreInt === 1 ? 1 : questNombreInt - 1;
+    const questNext = questNombreInt + 1;
+    const [results, setResults] = useState({});
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    async function attendre (ms) {
+        return new Promise(resolve => setTimeout(resolve,ms));
+    }
+
+    useEffect (() => {
+
+        async function fetchSurvey () {
+            try {
+
+                setLoading(true);
+                await attendre(2000);
+
+                const respons = await fetch('http://localhost:8000/survey');
+                const data = await respons.json();
+
+                setResults(data.results || [] );
+                console.log('rechargement reussi');
+            } catch (error) {
+                setError('impossible de charger api');
+            } finally{
+                setLoading(false);
+            }
+        }
+
+        fetchSurvey();
+
+    }, []);
+    
     return (
+        
         <Container>
 
-            <BlockTop>
-                <TitleContainer>
-                    <Title> Question 1 </Title>
-                    <BarViolet />
-                </TitleContainer>
-                <Paragraph>Votre application doit-elle impérativement apparaître en premier dans les résultats de recherche ?</Paragraph>
-            </BlockTop>
+            { loading && <Spinner />}
+            { !loading && error && <span> echeque de chargement </span> }
 
-            <ButtomQuiz>
-                <ButtonOui> Oui </ButtonOui>
-                <Button> Non </Button>
-            </ButtomQuiz>
+            { !loading && !error && (
+                <>
+                    <BlockTop>
+                        <TitleContainer>
+                            <Title> Question {questNombreInt} </Title>
+                            <BarViolet />
+                        </TitleContainer>
+                        <Paragraph>{results[questNombreInt - 1]?.question || "Question non trouvée"} </Paragraph>
+                    </BlockTop>
 
-            <ButtomOption>
-                <StyleLink to="/"> Precedent </StyleLink>
-                <StyleLink to="/"> Next </StyleLink>
-            </ButtomOption>
+                    <ButtomQuiz>
+                        <ButtonOui> Oui </ButtonOui>
+                        <Button> Non </Button>
+                    </ButtomQuiz>
 
+                    <ButtomOption>
+                        <StyleLink to={`/Quiz/${precQuest}`} > Precedent </StyleLink>
+                        <StyleLink to={`/Quiz/${questNext}`} > Next </StyleLink>
+                    </ButtomOption>
+                </>
+            )}
         </Container>
     )
+    
 }
 
 export default Quiz;

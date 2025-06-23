@@ -19,6 +19,7 @@ function App() {
         <Route path="/" element={<> <Header /> <Home /> </>} />
         <Route path="/results" element={<> <Header /> <Results /> </>} />
         <Route path="/quiz" element={<> <Header /> <Quiz /> </>} />
+        <Route path='/Quiz/:questNombre' element={<> <Header /> <Quiz /> </>} />
         <Route path="/freelances" element={<> <Header />  <Freelances /> </>} />
         <Route path='/profil/:id' element={<> <Header /> <Profil /> </>} />
       </Routes>
