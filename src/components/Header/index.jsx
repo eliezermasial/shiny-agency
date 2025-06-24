@@ -1,13 +1,14 @@
-import { Link } from 'react-router-dom'
-import Styled from 'styled-components'
+import { Link } from 'react-router-dom';
+import Styled, {keyframes} from 'styled-components';
 import logo from '../../assets/shiny-logo_shiny-logo-light 1.svg'
-import colors from '../../utils/Style/colors'
+import colors from '../../utils/Style/colors';
+import { useState } from 'react';
 
 const StyleNav = Styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 25px 0;
+  padding: 15px 0;
   margin: 0 50px;
   border-bottom: 1px solid #e2e3e9;
   background-color: transparent;
@@ -28,6 +29,10 @@ const NavLinks = Styled.div`
   justify-content: center;
   height: 40px;
   gap: 20px;
+
+  @media (max-width: 768px) {
+    display: none
+  }
 `
 
 const StyledLink = Styled(Link)`
@@ -59,7 +64,63 @@ const StyledFreelanceLink = Styled(StyledLink)`
   };
 `
 
+const MobileMenu = Styled.div`
+  display: ${(openMenu) => openMenu ? 'flex' : 'none'};
+  top: 20%;
+  left: 50px;
+  right: 0;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 999;
+  width: 50%;
+  list-style: none;
+  padding: 20px;
+  position: absolute;
+  background: ${colors.textSecondary};
+
+  Link {
+    text-decoration: none;
+  }
+`
+const spin = keyframes`
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(80deg);
+    }
+`
+const ButtonMobile = Styled.button`
+  display: none;
+  cursor: pointer;
+  
+  border: 1px solid ${colors.violetMain};
+  border-raduis: 30px;
+  padding: 1px;
+  text-align: center;
+  animation: ${spin} 2s linear infinite;
+
+  svg {
+    width: 40px;
+    stroke: ${colors.violetMain};
+  }
+
+  &:hover {
+    opacity: 0.85;
+    transform: scale(1.03);
+    transition: 0.3s ease;
+    animation: none;
+  };
+
+  @media (max-width: 768px) {
+    display: flex;
+  }
+`
+
+
+
 function Header() {
+  const [openMenu, setOpenMenu ] = useState(false);
   return (
     <StyleNav>
       <LogoContainer>
@@ -73,6 +134,23 @@ function Header() {
         <StyledLink to="/freelances" $colorLinks> Profils </StyledLink>
         <StyledFreelanceLink to="/quiz" $bgBotton> faire le test </StyledFreelanceLink>
       </NavLinks>
+
+      <ButtonMobile onClick={()=>setOpenMenu(open => !open)}>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+      </ButtonMobile>
+      
+
+      {openMenu && (
+        <>
+          <MobileMenu>
+            <Link> Accueil </Link>
+            <Link> Profils </Link>
+            <Link> Faire le tes </Link>
+          </MobileMenu>
+        </>
+      )}
     </StyleNav>
   )
 }
