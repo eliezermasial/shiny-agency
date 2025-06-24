@@ -51,7 +51,7 @@ const NameSection = Styled.div`
 
         span{
             font-size: 16px;
-            color: ${colors.textSecondary};
+            color: ${colors.coolGray};
         }
     }
 

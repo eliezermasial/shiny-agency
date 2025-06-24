@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
 import Styled, {keyframes} from 'styled-components';
-import logo from '../../assets/shiny-logo_shiny-logo-light 1.svg'
+import logoLight from '../../assets/shiny-logo_shiny-logo-light 1.svg';
+import logoDark from '../../assets/shiny-logo_shiny-logo-dark 1.svg';
 import colors from '../../utils/Style/colors';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import {ThemeContext} from '../../utils/Context';
+
 
 const StyleNav = Styled.nav`
   display: flex;
@@ -43,7 +46,7 @@ const StyledLink = Styled(Link)`
   line-height: 100%;
   letter-spacing: 0;
   font-family: 'Trebuchet MS', sans-serif;
-  ${(props) => props.$colorLinks && `color: ${colors.coolGray};`}
+  color: ${(props) => (props.$colorLinks === 'dark' ? colors.backgroundLight : colors.coolGray)};
 
   &:hover {
     color: ${colors.violetMain};
@@ -76,7 +79,7 @@ const MobileMenu = Styled.div`
   list-style: none;
   padding: 20px;
   position: absolute;
-  background: ${colors.textSecondary};
+  background: ${colors.coolGray};
 
   Link {
     text-decoration: none;
@@ -117,21 +120,22 @@ const ButtonMobile = Styled.button`
   }
 `
 
-
-
 function Header() {
+
   const [openMenu, setOpenMenu ] = useState(false);
+  const {theme} = useContext(ThemeContext);
+  
   return (
     <StyleNav>
       <LogoContainer>
         <Link to="/logo">
-          <Logo src={logo} alt="Logo Shiny Agency" />
+          <Logo src={theme === 'dark' ? logoDark : logoLight} alt="Logo Shiny Agency" />
         </Link>
       </LogoContainer>
 
       <NavLinks>
-        <StyledLink to="/" $colorLinks> Accueil </StyledLink>
-        <StyledLink to="/freelances" $colorLinks> Profils </StyledLink>
+        <StyledLink to="/" $colorLinks={theme}> Accueil </StyledLink>
+        <StyledLink to="/freelances" $colorLinks={theme}> Profils </StyledLink>
         <StyledFreelanceLink to="/quiz" $bgBotton> faire le test </StyledFreelanceLink>
       </NavLinks>
 
@@ -141,7 +145,6 @@ function Header() {
         </svg>
       </ButtonMobile>
       
-
       {openMenu && (
         <>
           <MobileMenu>

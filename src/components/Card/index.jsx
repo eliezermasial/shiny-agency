@@ -2,6 +2,9 @@ import PropTypes from "prop-types";
 import Styled from "styled-components";
 import DefaultPicture from '../../assets/profil.jpg';
 import colors from '../../utils/Style/colors.js';
+import {useContext} from 'react';
+import { ThemeContext } from '../../utils/Context';
+
 
 // === Typage des props
 Card.propTypes = {
@@ -27,8 +30,8 @@ const CardWrapper = Styled.div`
   justify-content: center;
   gap: 20px;
   border-radius: 10px;
-  background-color: ${colors.backgroundLight};
-  border: ${colors.backgroundLight} solid 1px;
+  background-color: ${(props) => (props.themeMode === 'dark' ? colors.darkIndigo : colors.backgroundLight)};
+  border: none;
   transition: box-shadow 200ms, border 200ms;
 
   &:hover {
@@ -36,7 +39,7 @@ const CardWrapper = Styled.div`
     box-shadow: 2px 2px 10px #e2e3e9;
     border: ${colors.violetMain} solid 1px;
     border-radius: 30px;
-  }
+  };
 `
 
 const CardLabel = Styled.span`
@@ -65,8 +68,11 @@ const CardTitle = Styled.span`
 `
 
 function Card({ label, title, picture }) {
+
+  const {theme} = useContext(ThemeContext)
+
   return (
-    <CardWrapper>
+    <CardWrapper themMode={theme}>
       <CardLabel>{label}</CardLabel>
       <BlockImgDesc>
         <CardPicture src={picture} alt="freelance" />

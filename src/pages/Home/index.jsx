@@ -10,7 +10,7 @@ const Container = Styled.div`
   align-items: center;
   padding: 50px;
   padding-bottom: 100px;
-  margin: 50px;
+  margin: 50px 50px 0 50px;
   background-color: ${colors.backgroundLight};
   min-height: 80vh;
   box-sizing: border-box;

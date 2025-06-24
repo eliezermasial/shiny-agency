@@ -4,7 +4,8 @@ import Card from '../../components/Card/';
 import DefaultPicture from '../../assets/profil.jpg';
 import { Link } from 'react-router-dom';
 import Attend from '../../utils/Attend';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import { ThemeContext } from '../../utils/Context';
 
 
 const Container = Styled.div`
@@ -16,7 +17,7 @@ const Container = Styled.div`
     padding-bottom: 100px;
     margin: 50px;
     gap: 80px;
-    color: ${colors.textSecondary};
+    color: ${colors.coolGray};
     min-height: 80vh;
     box-sizing: border-box;
 `
@@ -32,7 +33,7 @@ const Title = Styled.h1`
     font-size: 30px;
     line-height: 133%;
     letter-spacing: 0;
-    color: ${colors.secondary};
+    color: ${(props) => (props.themeMode === 'dark' ? colors.backgroundLight : colors.secondary)};
     margin: 0;
 `
 
@@ -40,6 +41,7 @@ const Paragraph = Styled.p`
     font-weight: 700;
     line-height: 133%;
     letter-spacing: 0;
+    color: ${(props) => (props.themeMode === 'dark' ? colors.backgroundLight : colors.coolGray)};
 `
 
 const BlockCard = Styled.div`
@@ -71,7 +73,7 @@ const Spinner = Styled.div`
 `
 
 function Freelances() {
-
+    const {theme} = useContext(ThemeContext);
     const [freelanceProfiles, setFreelances] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -110,8 +112,8 @@ function Freelances() {
             {!loading && !error && (
                 <>
                     <TitleContainer>
-                        <Title>Trouvez votre prestataire</Title>
-                        <Paragraph>Chez Shiny nous réunissons les meilleurs profils pour vous.</Paragraph>
+                        <Title themeMode={theme}>Trouvez votre prestataire</Title>
+                        <Paragraph themeMode={theme}>Chez Shiny nous réunissons les meilleurs profils pour vous.</Paragraph>
                     </TitleContainer>
 
                     <BlockCard>

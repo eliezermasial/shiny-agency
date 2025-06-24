@@ -1,8 +1,9 @@
 import Styled, {keyframes} from 'styled-components';
 import colors from '../../utils/Style/colors';
 import { Link, useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Attend from '../../utils/Attend';
+import { ThemeContext } from '../../utils/Context';
 
 
 const Container = Styled.div`
@@ -36,6 +37,7 @@ const Title = Styled.h1`
   font-weight: 700;
   line-height: 161%;
   font-family: 'Comfortaa', sans-serif;
+  color: ${(props) => (props.themeMode === 'dark' ? colors.backgroundLight : colors.secondary)};
 `
 
 const BarViolet = Styled.hr`
@@ -48,6 +50,7 @@ const BarViolet = Styled.hr`
 
 const Paragraph = Styled.p`
     margin-bottom: 26px;
+    color: ${(props) => (props.themeMode === 'dark' ? colors.backgroundLight : colors.coolGray)};
 `
 
 const ButtomQuiz = Styled.div`
@@ -67,7 +70,8 @@ const Button = Styled.button`
     font-bold: bold;
     font-weight: 700;
     border-radius:  31px ;
-    background-color: ${colors.backgroundLight};
+    background-color: ${(props) => (props.themeMode === 'dark' ? colors.coolGray : colors.backgroundLight)};
+    color: ${(props) => (props.themeMode === 'dark' ? colors.backgroundLight : colors.secondary)};
 
     &:hover{
         border:  solid 2px ${colors.violetMain} ;
@@ -93,7 +97,7 @@ const ButtomOption = Styled.div`
 `
 
 const StyleLink = Styled(Link)`
-    color: ${colors.secondary};
+    color: ${(props) => (props.themeMode === 'dark' ? colors.backgroundLight : colors.secondary)};
 
     &:hover {
         color: ${colors.violetMain};
@@ -129,6 +133,7 @@ function Quiz() {
     const [results, setResults] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const {theme} = useContext(ThemeContext);
 
     useEffect (() => {
 
@@ -165,20 +170,20 @@ function Quiz() {
                 <>
                     <BlockTop>
                         <TitleContainer>
-                            <Title> Question {questNombreInt} </Title>
+                            <Title themeMode={theme}> Question {questNombreInt} </Title>
                             <BarViolet />
                         </TitleContainer>
-                        <Paragraph>{results[questNombreInt - 1]?.question || "Question non trouvée"} </Paragraph>
+                        <Paragraph themeMode={theme}>{results[questNombreInt - 1]?.question || "Question non trouvée"} </Paragraph>
                     </BlockTop>
 
                     <ButtomQuiz>
-                        <ButtonOui> Oui </ButtonOui>
-                        <Button> Non </Button>
+                        <ButtonOui themeMode={theme}> Oui </ButtonOui>
+                        <Button themeMode={theme}> Non </Button>
                     </ButtomQuiz>
 
                     <ButtomOption>
-                        <StyleLink to={`/Quiz/${precQuest}`} > Precedent </StyleLink>
-                        <StyleLink to={`/Quiz/${questNext}`} > Next </StyleLink>
+                        <StyleLink to={`/Quiz/${precQuest}`} themeMode={theme}> Precedent </StyleLink>
+                        <StyleLink to={`/Quiz/${questNext}`} themeMode={theme}> Next </StyleLink>
                     </ButtomOption>
                 </>
             )}
