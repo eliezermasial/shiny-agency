@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 import Attend from '../../utils/Attend';
 import { ThemeContext } from '../../utils/Context';
+import {AnswerSurveyContext} from '../../utils/Context';
 
 
 const Container = Styled.div`
@@ -72,6 +73,7 @@ const Button = Styled.button`
     border-radius:  31px ;
     background-color: ${(props) => (props.themeMode === 'dark' ? colors.coolGray : colors.backgroundLight)};
     color: ${(props) => (props.themeMode === 'dark' ? colors.backgroundLight : colors.secondary)};
+    box-shadow: ${(props) =>props.isSelected ? `0px 0px 0px 2px ${colors.primary} inset` : 'none'};
 
     &:hover{
         border:  solid 2px ${colors.violetMain} ;
@@ -134,23 +136,34 @@ function Quiz() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const {theme} = useContext(ThemeContext);
+    const {saveAnswers,answers} = useContext(AnswerSurveyContext);
+
+    function saveReplay(answers) {
+
+        saveAnswers({[questNombre]: answers})
+    }
 
     useEffect (() => {
 
         async function fetchSurvey () {
+
             try {
 
                 setLoading(true);
                 await Attend(2000);
 
                 const respons = await fetch('http://localhost:8000/survey');
+
                 const data = await respons.json();
 
                 setResults(data.results || [] );
-                console.log('rechargement reussi');
+
             } catch (error) {
+
                 setError('impossible de charger api');
+
             } finally{
+
                 setLoading(false);
             }
         }
@@ -177,8 +190,8 @@ function Quiz() {
                     </BlockTop>
 
                     <ButtomQuiz>
-                        <ButtonOui themeMode={theme}> Oui </ButtonOui>
-                        <Button themeMode={theme}> Non </Button>
+                        <ButtonOui onClick={()=>saveReplay(true)} isSelected={answers[questNombre] === true} themeMode={theme}> Oui </ButtonOui>
+                        <Button onClick={()=>saveReplay(false)} isSelected={answers[questNombre] === false}  themeMode={theme}> Non </Button>
                     </ButtomQuiz>
 
                     <ButtomOption>

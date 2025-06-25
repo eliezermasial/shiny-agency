@@ -6,14 +6,17 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from './utils/Context';
 import GlobalStyle from './utils/GlobalStyle';
+import { SurveyProvider } from './utils/Context';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
     <ThemeProvider>
-      <GlobalStyle />
-      <App />
+      <SurveyProvider>
+        <GlobalStyle />
+        <App />
+      </SurveyProvider>
     </ThemeProvider>
   </BrowserRouter>
 );
