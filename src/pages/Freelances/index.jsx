@@ -3,9 +3,9 @@ import colors from '../../utils/Style/colors';
 import Card from '../../components/Card/';
 import DefaultPicture from '../../assets/profil.jpg';
 import { Link } from 'react-router-dom';
-import Attend from '../../utils/Attend';
-import { useEffect, useState, useContext } from 'react';
+import { useContext } from 'react';
 import { ThemeContext } from '../../utils/Context';
+import { useFetch } from '../../utils/Hooks';
 
 
 const Container = Styled.div`
@@ -74,35 +74,9 @@ const Spinner = Styled.div`
 
 function Freelances() {
     const {theme} = useContext(ThemeContext);
-    const [freelanceProfiles, setFreelances] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
 
-    useEffect(() => {
-
-        async function getFreelancesByFetch () {
-            try {
-                setLoading(true);
-                await Attend(2000);
-
-                const respons = await fetch('http://localhost:8000/freelances');
-                const data = await respons.json();
-
-                setFreelances(data.freelancersList || []);
-
-            } catch (error) {
-
-                setError(error);
-
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        getFreelancesByFetch();
-
-    }, []);
-    
+    const {data: freelancersList,loading,error} = useFetch('http://localhost:8000/freelances')
+    console.log(freelancersList);
     return (
         <Container>
 
@@ -117,7 +91,7 @@ function Freelances() {
                     </TitleContainer>
 
                     <BlockCard>
-                        {freelanceProfiles.map((profil, index) => (
+                        {freelancersList.map((profil, index) => (
                             <Link to={`/profil/${profil.id}`} key={`${profil.name} - ${index}`} style={{ textDecoration: 'none' }}>
                                 <Card 
                                     label={profil.name}

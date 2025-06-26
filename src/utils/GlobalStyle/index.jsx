@@ -19,8 +19,8 @@ const StyledGlobalStyle = createGlobalStyle`
 
 function GlobalStyle() {
 
-    const { theme } = useContext(ThemeContext)
-    const isDarkMode = theme === 'dark'
+    const { theme } = useContext(ThemeContext);
+    const isDarkMode = theme === 'dark';
 
     return <StyledGlobalStyle isDarkMode={isDarkMode} />
 }

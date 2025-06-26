@@ -1,10 +1,10 @@
 import Styled, {keyframes} from 'styled-components';
 import colors from '../../utils/Style/colors';
 import { Link, useParams } from 'react-router-dom';
-import { useState, useEffect, useContext } from 'react';
-import Attend from '../../utils/Attend';
+import { useContext } from 'react';
 import { ThemeContext } from '../../utils/Context';
 import {AnswerSurveyContext} from '../../utils/Context';
+import { useFetch } from '../../utils/Hooks';
 
 
 const Container = Styled.div`
@@ -132,45 +132,18 @@ function Quiz() {
     const questNombreInt = parseInt(questNombre);
     const precQuest = questNombreInt === 1 ? 1 : questNombreInt - 1;
     const questNext = questNombreInt + 1;
-    const [results, setResults] = useState({});
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    console.log(questNombre);
+    
     const {theme} = useContext(ThemeContext);
     const {saveAnswers,answers} = useContext(AnswerSurveyContext);
+
+    const {data: results,loading,error} = useFetch('http://localhost:8000/survey');
+    console.log(results)
 
     function saveReplay(answers) {
 
         saveAnswers({[questNombre]: answers})
     }
-
-    useEffect (() => {
-
-        async function fetchSurvey () {
-
-            try {
-
-                setLoading(true);
-                await Attend(2000);
-
-                const respons = await fetch('http://localhost:8000/survey');
-
-                const data = await respons.json();
-
-                setResults(data.results || [] );
-
-            } catch (error) {
-
-                setError('impossible de charger api');
-
-            } finally{
-
-                setLoading(false);
-            }
-        }
-
-        fetchSurvey();
-
-    }, []);
     
     return (
         
