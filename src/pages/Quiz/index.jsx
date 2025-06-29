@@ -129,22 +129,21 @@ const Spinner = Styled.div`
 function Quiz() {
 
     const {questNombre} = useParams();
-    const questNombreInt = parseInt(questNombre);
+    const questNombreInt = questNombre ? parseInt(questNombre) : 1;
     const precQuest = questNombreInt === 1 ? 1 : questNombreInt - 1;
     const questNext = questNombreInt + 1;
-    console.log(questNombre);
     
     const {theme} = useContext(ThemeContext);
     const {saveAnswers,answers} = useContext(AnswerSurveyContext);
 
     const {data: results,loading,error} = useFetch('http://localhost:8000/survey');
-    console.log(results)
 
-    function saveReplay(answers) {
-
-        saveAnswers({[questNombre]: answers})
+    function saveReplay(reponse) {
+        if (!isNaN(questNombreInt)) {
+            saveAnswers({ [questNombreInt]: reponse });
+        }
     }
-    
+
     return (
         
         <Container>

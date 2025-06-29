@@ -1,4 +1,4 @@
-import { useState, createContext } from 'react';
+import { useState, createContext, useEffect } from 'react';
 
 export const ThemeContext = createContext();
 
@@ -20,11 +20,21 @@ export const ThemeProvider = ({children}) => {
 export const AnswerSurveyContext = createContext();
 
 export const SurveyProvider = ({children}) => {
-    const [answers, setAnswer] = useState({});
+
+    const [answers, setAnswer] = useState(()=> {
+        const storadAnswers =  localStorage.getItem('answers');
+        return storadAnswers ? JSON.parse(storadAnswers) : {};
+    });
+
+    useEffect(() => {
+
+        localStorage.setItem('answers', JSON.stringify(answers));
+        
+    }, [answers]);
 
     const saveAnswers = (newAnswers) => {
-        setAnswer(prev => ({...prev,...newAnswers}));
-        console.log(answers);
+
+       setAnswer(prev => ({...prev,...newAnswers}));
     }
 
     return (

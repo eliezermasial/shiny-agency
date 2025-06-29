@@ -25,7 +25,6 @@ export function useFetch(url) {
 
                 const respons = await fetch(url);
                 const dataJson = await respons.json();
-                console.log('Réponse complète de l’API :', dataJson); 
 
                 if (Array.isArray(dataJson)) {
 
@@ -38,6 +37,10 @@ export function useFetch(url) {
                 } else if (Array.isArray(dataJson.freelancersList)) {
 
                         setData(dataJson.freelancersList)
+
+                } else if (Array.isArray(dataJson.resultsData)) {
+
+                        setData(dataJson.resultsData)
 
                 } else if (dataJson.surveyData && typeof dataJson.surveyData === 'object') {
 
