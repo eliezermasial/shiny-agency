@@ -73,10 +73,11 @@ const Spinner = Styled.div`
 `
 
 function Freelances() {
+
     const {theme} = useContext(ThemeContext);
 
     const {data: freelancersList,loading,error} = useFetch('http://localhost:8000/freelances')
-    console.log(freelancersList);
+
     return (
         <Container>
 

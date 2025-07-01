@@ -1,7 +1,7 @@
-import Styled from 'styled-components'
-import { useParams } from 'react-router-dom'
-import colors from '../../utils/Style/colors'
-import DefaultPicture from '../../assets/profil.jpg'
+import Styled from 'styled-components';
+//import { useParams } from 'react-router-dom'
+import colors from '../../utils/Style/colors';
+import DefaultPicture from '../../assets/profil.jpg';
 
 const Container = Styled.div`
     display: flex;

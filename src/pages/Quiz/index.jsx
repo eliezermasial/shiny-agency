@@ -5,6 +5,8 @@ import { useContext } from 'react';
 import { ThemeContext } from '../../utils/Context';
 import {AnswerSurveyContext} from '../../utils/Context';
 import { useFetch } from '../../utils/Hooks';
+import Error from '../../components/Error';
+
 
 
 const Container = Styled.div`
@@ -149,7 +151,7 @@ function Quiz() {
         <Container>
 
             { loading && <Spinner />}
-            { !loading && error && <span> echeque de chargement </span> }
+            { !loading && error && <Error /> }
 
             { !loading && !error && (
                 <>
